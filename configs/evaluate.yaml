@@ -1,0 +1,9 @@
+checkpoint: ./weights/checkpoint.pt
+
+batch_size: 32
+num_workers: 0
+
+conf_threshold: 0.9
+iou_threshold: 0.45
+
+device: cpu

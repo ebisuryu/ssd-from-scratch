@@ -1,9 +1,9 @@
-batch_size: 32
-epochs: 10
+batch_size: 64
+epochs: 150
 grad_accumulation_steps: 1
 gradient_clip_norm: 1.0
 
-optimizer: adamw
+optimizer: adam
 learning_rate: 0.00001
 gamma: 0.9
 betas: [0.9, 0.98]
@@ -15,6 +15,6 @@ monitor_mode: min
 checkpoint_dir: weights
 save_best_only: true
 
-device: cuda
+device: cpu
 num_workers: 2
 seed: 42
