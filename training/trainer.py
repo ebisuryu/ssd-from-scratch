@@ -118,7 +118,7 @@ class Trainer:
         start_epoch: int = 1,
         save_every: int = 3
     ) -> pd.DataFrame:
-        for epoch in range(start_epoch, start_epoch + self.config.epochs + 1):
+        for epoch in range(start_epoch, start_epoch + self.config.epochs):
             train_loss = self.train_epoch(train_loader, epoch)
             val_loss = self.eval_epoch(val_loader, epoch)
 
