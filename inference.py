@@ -1,7 +1,6 @@
 from typing import List
 import argparse
 
-
 import cv2
 import torch
 import numpy as np
@@ -88,26 +87,12 @@ def preprocess_image(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="SSD inference",
-    )
-
-    parser.add_argument(
-        "--model-config",
-        type=str,
-        default="./configs/model/ssd300.yaml",
-        help="Path to model YAML config file",
-    )
-    parser.add_argument(
-        "--data-config",
-        type=str,
-        default="./configs/data/voc.yaml",
-        help="Path to dataset YAML config file",
-    )
+    parser = argparse.ArgumentParser(description="SSD inference",)
+    
     parser.add_argument(
         "--checkpoint",
         type=str,
-        default="./weights/best.pt",
+        default="./weights/checkpoint.pt",
         help="Path to model checkpoint file",
     )
     parser.add_argument(
@@ -156,22 +141,26 @@ def main() -> None:
 
     model_config = load_config_from_yaml(
         config_type="model",
-        file_path=args.model_config,
+        file_path="./configs/model/ssd300.yaml",
     )
     data_config = load_config_from_yaml(
         config_type="data",
-        file_path=args.data_config,
+        file_path="./configs/data/voc.yaml",
     )
 
     model = SSD(
         config=model_config,
     ).to(device)
 
-    state_dict = torch.load(
+    checkpoint = torch.load(
         args.checkpoint,
         map_location=device,
+        weights_only=False,
     )
-    model.load_state_dict(state_dict)
+    model.load_state_dict(
+        checkpoint["model_state"],
+        strict=False,
+    )
     model.eval()
 
     x, rgb_image = preprocess_image(
