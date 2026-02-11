@@ -63,7 +63,16 @@ class TrainConfig:
 
 @dataclass
 class EvaluateConfig:
-    pass
+    
+    checkpoint: str
+    
+    batch_size: int
+    num_workers: int
+    
+    conf_threshold: float
+    iou_threshold: float
+    
+    device: str
 
 
 def load_config_from_yaml(config_type: str, file_path: str) -> Any:
