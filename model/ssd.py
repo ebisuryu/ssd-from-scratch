@@ -45,8 +45,9 @@ class SSD(nn.Module):
             box_variances=config.box_variances,
             box_clip=config.box_clip
         )
-        self.default_boxes = self.prior_box.generate()
-
+        default_boxes = self.prior_box.generate()
+        self.register_buffer("default_boxes", default_boxes)
+        
         feature_channels = (
             self.backbone.out_channels()
             + self.extras.out_channels()
